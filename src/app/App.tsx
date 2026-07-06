@@ -44,7 +44,7 @@ function LinkedinIcon({ size = 20, color = "currentColor" }: { size?: number; co
 
 /* ── Dark Mode Context ──────────────────────────────── */
 interface ThemeCtx { isDark: boolean; toggle: () => void; }
-const DarkModeContext = createContext<ThemeCtx>({ isDark: false, toggle: () => {} });
+const DarkModeContext = createContext<ThemeCtx>({ isDark: false, toggle: () => { } });
 function useTheme() { return useContext(DarkModeContext); }
 
 /* ── useInView ──────────────────────────────────────────── */
@@ -193,7 +193,7 @@ function Navbar() {
             <img
               src="/src/assets/interActLogo.png"
               alt="InterAct Logo"
-              style={{ height: "60px", width: "auto", objectFit: "contain" }}
+              style={{ height: "60px", width: "auto", objectFit: "contain", borderRadius:"15px" }}
             />
           </a>
 
@@ -314,7 +314,7 @@ const SLIDES = [
     sub: "Inter-act es el equipo detrás de Puerto Seguro: soluciones digitales con propósito humano, privacidad como arquitectura y rigor clínico como estándar.",
     btn1: "Conocer al equipo",
     btn1Href: "#equipo",
-    btn2: "Ver Puerto Seguro ↓",
+    btn2: "Ver Puerto Seguro",
     btn2Href: "#plataforma",
     imgId: "pescadores.png",
   },
@@ -336,7 +336,7 @@ const SLIDES = [
     btn1Href: "#stack",
     btn2: "Contactar al equipo",
     btn2Href: "#contacto",
-    imgId: "photo-1573496359142-b8d87734a5a2",
+    imgId: "burnoutHojas.png",
   },
 ];
 
@@ -364,7 +364,7 @@ function HeroSlider() {
   const s = SLIDES[current];
 
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: "640px", background: "#0C2340" }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: "max(100vh, 720px)", background: "#0C2340" }}>
       {/* Backgrounds */}
       {SLIDES.map((sl, i) => (
         <div
@@ -386,7 +386,7 @@ function HeroSlider() {
       <div
         className="relative z-10 flex items-center h-full"
         style={{
-          minHeight: "640px",
+          minHeight: "max(100vh, 720px)",
           paddingTop: "110px",
           paddingBottom: "80px",
           paddingLeft: "clamp(24px, 7vw, 120px)",
@@ -396,7 +396,7 @@ function HeroSlider() {
           transition: "opacity 0.35s ease, transform 0.35s ease",
         }}
       >
-        <div style={{ maxWidth: "720px" }}>
+        <div style={{ maxWidth: "720px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", minHeight: "420px" }}>
           <Chip dark>{s.badge}</Chip>
 
           <h1
@@ -844,28 +844,28 @@ function Metodologia() {
         <div className="flex md:hidden flex-col gap-8 relative">
           <div className="absolute top-6 bottom-6 left-6 w-px" style={{ background: "var(--connector-line)" }} />
           {STEPS.map((step, _i) => (
-              <div key={step.num} className="flex gap-6 pl-0">
-                <div className="relative z-10 flex-shrink-0">
-                  <div
-                    className="flex items-center justify-center"
-                    style={{
-                      width: "52px", height: "52px", borderRadius: "50%",
-                      background: "var(--step-circle-bg)", border: "2px solid var(--step-circle-border)",
-                    }}
-                  >
-                    <span style={{ ...MONT, fontWeight: 800, fontSize: "14px", color: "var(--text-heading)" }}>{step.num}</span>
-                  </div>
-                </div>
-                <div className="pt-2">
-                  <h3 style={{ ...MONT, fontWeight: 700, fontSize: "16px", color: "var(--text-heading)", marginBottom: "6px" }}>
-                    {step.title}
-                  </h3>
-                  <p style={{ ...INTER, fontSize: "14px", lineHeight: 1.65, color: "var(--text-body)" }}>
-                    {step.text}
-                  </p>
+            <div key={step.num} className="flex gap-6 pl-0">
+              <div className="relative z-10 flex-shrink-0">
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    width: "52px", height: "52px", borderRadius: "50%",
+                    background: "var(--step-circle-bg)", border: "2px solid var(--step-circle-border)",
+                  }}
+                >
+                  <span style={{ ...MONT, fontWeight: 800, fontSize: "14px", color: "var(--text-heading)" }}>{step.num}</span>
                 </div>
               </div>
-            ))}
+              <div className="pt-2">
+                <h3 style={{ ...MONT, fontWeight: 700, fontSize: "16px", color: "var(--text-heading)", marginBottom: "6px" }}>
+                  {step.title}
+                </h3>
+                <p style={{ ...INTER, fontSize: "14px", lineHeight: 1.65, color: "var(--text-body)" }}>
+                  {step.text}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -1234,9 +1234,9 @@ function EquipoDesarrollo() {
         </span>
         <h2
           style={{
-          ...MONT, fontSize: "clamp(28px,4vw,42px)", fontWeight: 800,
-          color: "var(--text-heading)", lineHeight: 1.15, margin: "0 0 16px",
-        }}
+            ...MONT, fontSize: "clamp(28px,4vw,42px)", fontWeight: 800,
+            color: "var(--text-heading)", lineHeight: 1.15, margin: "0 0 16px",
+          }}
         >
           Las personas detrás de InterAct
         </h2>
@@ -1432,26 +1432,26 @@ export default function App() {
   return (
     <DarkModeContext.Provider value={{ isDark, toggle }}>
       <div data-dark={isDark ? "true" : "false"} style={{ fontFamily: "'Inter', sans-serif", color: "var(--text-heading)" }}>
-      <GradientBar />
-      <Navbar />
+        <GradientBar />
+        <Navbar />
 
-      <main>
-        {/* Hero sits flush at top; its content is padded internally */}
-        <div style={{ paddingTop: "6px" }}>
-          <HeroSlider />
-        </div>
+        <main>
+          {/* Hero sits flush at top; its content is padded internally */}
+          <div style={{ paddingTop: "6px" }}>
+            <HeroSlider />
+          </div>
 
-        <QuienesSomos />
-        <PuertoSeguro />
-        <Metodologia />
-        <Metricas />
-        <StackTecnologico />
-        <EquipoDesarrollo />
-        <CTA />
-      </main>
+          <QuienesSomos />
+          <PuertoSeguro />
+          <Metodologia />
+          <Metricas />
+          <StackTecnologico />
+          <EquipoDesarrollo />
+          <CTA />
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
     </DarkModeContext.Provider>
   );
 }
