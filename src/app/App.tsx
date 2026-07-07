@@ -9,6 +9,7 @@ import photoContu from "../assets/contuPerfil.png";
 import photoFiona from "../assets/fionaPerfil.png";
 import photoLara from "../assets/laraPerfil.png";
 import photoDylan from "../assets/dylanPerfil.png";
+import imgEquipo from "../assets/equipo.png";
 
 /* ── Fonts ─────────────────────────────────────────────── */
 const MONT: React.CSSProperties = { fontFamily: "'Montserrat', sans-serif" };
@@ -590,7 +591,7 @@ function QuienesSomos() {
         >
           <div style={{ borderRadius: "16px", overflow: "hidden", background: "var(--bg-secondary)" }}>
             <img
-              src="src\assets\equipo.png"
+              src={imgEquipo}
               alt="Equipo Inter-act trabajando"
               className="w-full object-cover"
               style={{ height: "420px" }}
