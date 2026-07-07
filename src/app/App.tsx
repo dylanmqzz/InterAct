@@ -374,8 +374,49 @@ function HeroSlider() {
 
   const s = SLIDES[current];
 
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handleDragStart = useCallback((clientX: number) => {
+    touchStartX.current = clientX;
+    touchEndX.current = null;
+  }, []);
+
+  const handleDragMove = useCallback((clientX: number) => {
+    if (touchStartX.current === null) return;
+    touchEndX.current = clientX;
+  }, []);
+
+  const handleDragEnd = useCallback(() => {
+    if (touchStartX.current === null || touchEndX.current === null) {
+      touchStartX.current = null;
+      touchEndX.current = null;
+      return;
+    }
+    const diff = touchStartX.current - touchEndX.current;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        goTo((current + 1) % SLIDES.length);
+      } else {
+        goTo((current - 1 + SLIDES.length) % SLIDES.length);
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  }, [current, goTo]);
+
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: "max(100vh, 720px)", background: "#0C2340" }}>
+    <section 
+      className="relative w-full overflow-hidden" 
+      style={{ minHeight: "max(100vh, 720px)", background: "#0C2340", touchAction: "pan-y", userSelect: "none" }}
+      onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+      onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+      onTouchEnd={handleDragEnd}
+      onMouseDown={(e) => handleDragStart(e.clientX)}
+      onMouseMove={(e) => handleDragMove(e.clientX)}
+      onMouseUp={handleDragEnd}
+      onMouseLeave={handleDragEnd}
+    >
       {/* Backgrounds */}
       {SLIDES.map((sl, i) => (
         <div
@@ -388,6 +429,7 @@ function HeroSlider() {
             alt=""
             aria-hidden="true"
             className="w-full h-full object-cover"
+            draggable={false}
           />
           <div className="absolute inset-0" style={{ background: "rgba(12,35,64,0.7)" }} />
         </div>
@@ -468,7 +510,7 @@ function HeroSlider() {
           onClick={() =>
             goTo(dir === "left" ? (current - 1 + SLIDES.length) % SLIDES.length : (current + 1) % SLIDES.length)
           }
-          className="absolute top-1/2 z-20 flex items-center justify-center transition-all duration-200"
+          className="hidden md:flex absolute top-1/2 z-20 items-center justify-center transition-all duration-200"
           style={{
             [dir]: "20px",
             transform: "translateY(-50%)",
@@ -593,8 +635,7 @@ function QuienesSomos() {
             <img
               src={imgEquipo}
               alt="Equipo Inter-act trabajando"
-              className="w-full object-cover"
-              style={{ height: "420px" }}
+              className="w-full h-auto block"
             />
           </div>
           {/* Floating badge */}
@@ -1334,7 +1375,7 @@ function EquipoDesarrollo() {
 ══════════════════════════════════════════════════════════ */
 function Footer() {
   const navLinks = ["Quiénes somos", "Puerto Seguro", "Tecnología", "Impacto", "Contacto"];
-  const productLinks = ["App móvil", "Dashboard RRHH", "Panel Médico", "Documentación"];
+  const productLinks = ["App móvil", "Dashboard RRHH", "Panel Especialista", "Documentación"];
 
   return (
     <footer style={{ background: "#0C2340", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
@@ -1374,45 +1415,47 @@ function Footer() {
           </div>
         </div>
 
-        {/* Nav links */}
-        <div>
-          <p style={{ ...INTER, fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
-            Navegación
-          </p>
-          <div className="flex flex-col gap-3">
-            {navLinks.map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="no-underline transition-colors duration-150"
-                style={{ ...INTER, fontSize: "14px", color: "rgba(255,255,255,0.65)" }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
-              >
-                {l}
-              </a>
-            ))}
+        <div className="grid grid-cols-2 gap-4 sm:gap-8 md:col-span-2 md:gap-16">
+          {/* Nav links */}
+          <div>
+            <p style={{ ...INTER, fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
+              Navegación
+            </p>
+            <div className="flex flex-col gap-3">
+              {navLinks.map((l) => (
+                <a
+                  key={l}
+                  href="#"
+                  className="no-underline transition-colors duration-150"
+                  style={{ ...INTER, fontSize: "14px", color: "rgba(255,255,255,0.65)" }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
+                >
+                  {l}
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Product links */}
-        <div>
-          <p style={{ ...INTER, fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
-            Puerto Seguro
-          </p>
-          <div className="flex flex-col gap-3">
-            {productLinks.map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="no-underline transition-colors duration-150"
-                style={{ ...INTER, fontSize: "14px", color: "rgba(255,255,255,0.65)" }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
-              >
-                {l}
-              </a>
-            ))}
+          {/* Product links */}
+          <div>
+            <p style={{ ...INTER, fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
+              Puerto Seguro
+            </p>
+            <div className="flex flex-col gap-3">
+              {productLinks.map((l) => (
+                <a
+                  key={l}
+                  href="#"
+                  className="no-underline transition-colors duration-150"
+                  style={{ ...INTER, fontSize: "14px", color: "rgba(255,255,255,0.65)" }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
+                >
+                  {l}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
