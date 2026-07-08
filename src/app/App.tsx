@@ -13,6 +13,7 @@ import photoFiona from "../assets/fionaPerfil.png";
 import photoLara from "../assets/laraPerfil.png";
 import photoDylan from "../assets/dylanPerfil.png";
 import imgEquipo from "../assets/equipo.png";
+import pdfPuertoSeguro from "../assets/PUERTO SEGURO - Analisis del sistema.pdf";
 
 /* ── Fonts ─────────────────────────────────────────────── */
 const MONT: React.CSSProperties = { fontFamily: "'Montserrat', sans-serif" };
@@ -1219,18 +1220,22 @@ function CTA() {
           >
             Contactar a Inter-act
           </button>
-          <button
+          <a
+            href={pdfPuertoSeguro}
+            download="PuertoSeguro_Analisis.pdf"
             style={{
               ...MONT, fontWeight: 700, fontSize: "13px", letterSpacing: "0.06em", textTransform: "uppercase",
               background: "transparent", color: "#fff", borderRadius: "6px",
               padding: "15px 32px", border: "2px solid rgba(255,255,255,0.45)", cursor: "pointer",
               transition: "all 0.2s",
+              textDecoration: "none",
+              display: "inline-block"
             }}
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.8)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.45)"; e.currentTarget.style.transform = "translateY(0)"; }}
           >
             Ver documentación técnica
-          </button>
+          </a>
         </div>
       </div>
     </section>
