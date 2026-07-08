@@ -705,7 +705,7 @@ const PLATFORM_CARDS = [
     icon: "monitor_heart",
     color: "#00A8B5",
     title: "Motor de análisis personalizado",
-    text: "El score de riesgo se calcula contra el baseline histórico de cada trabajador, no contra estándares genéricos. Z-scores por métrica, pesos validados clínicamente, clasificación en 4 niveles.",
+    text: "El score de riesgo se calcula contra el baseline histórico de cada trabajador, no contra estándares genéricos. Cuenta con pesos validados clínicamente, además de una clasificación en 4 niveles de riesgo.",
     badge: "Algoritmo validado · Médicos",
   },
   {
