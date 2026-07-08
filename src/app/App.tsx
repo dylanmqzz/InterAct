@@ -3,8 +3,11 @@ import { useState, useEffect, useRef, useCallback, createContext, useContext } f
 /* ── Image assets ───────────────────────────────────────── */
 import interActLogo from "../assets/interActLogo.png";
 import imgPescadores from "../assets/pescadores.png";
+import imgPescadoresMobile from "../assets/pescadoresMOBILE.png";
 import imgPuertoSeguro from "../assets/puertoSeguroBanner.png";
+import imgPuertoSeguroMobile from "../assets/puertoSeguroBannerMOBILE.png";
 import imgBurnout from "../assets/burnoutHojas.png";
+import imgBurnoutMobile from "../assets/burnoutHojasMOBILE.png";
 import photoContu from "../assets/contuPerfil.png";
 import photoFiona from "../assets/fionaPerfil.png";
 import photoLara from "../assets/laraPerfil.png";
@@ -328,6 +331,7 @@ const SLIDES = [
     btn2: "Ver Puerto Seguro",
     btn2Href: "#plataforma",
     img: imgPescadores,
+    imgMobile: imgPescadoresMobile,
   },
   {
     badge: "Detección Temprana de Burnout",
@@ -338,6 +342,7 @@ const SLIDES = [
     btn2: "Contactar al equipo",
     btn2Href: "#contacto",
     img: imgPuertoSeguro,
+    imgMobile: imgPuertoSeguroMobile,
   },
   {
     badge: "Tecnología con Impacto Real",
@@ -348,6 +353,7 @@ const SLIDES = [
     btn2: "Contactar al equipo",
     btn2Href: "#contacto",
     img: imgBurnout,
+    imgMobile: imgBurnoutMobile,
   },
 ];
 
@@ -424,13 +430,16 @@ function HeroSlider() {
           className="absolute inset-0 transition-opacity duration-700"
           style={{ opacity: i === current ? 1 : 0 }}
         >
-          <img
-            src={sl.img}
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover"
-            draggable={false}
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet={sl.imgMobile} />
+            <img
+              src={sl.img}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover"
+              draggable={false}
+            />
+          </picture>
           <div className="absolute inset-0" style={{ background: "rgba(12,35,64,0.7)" }} />
         </div>
       ))}
