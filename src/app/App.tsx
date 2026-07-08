@@ -1156,8 +1156,15 @@ function StackTecnologico() {
 /* ══════════════════════════════════════════════════════════
    SECCIÓN: CTA
 ══════════════════════════════════════════════════════════ */
+const EMAIL = "d@gmail.com";
+
 function CTA() {
   const { ref, inView } = useInView();
+  
+  // Usar mailto en móviles (donde siempre hay app por defecto) y Gmail web en escritorio
+  const isMobile = typeof navigator !== "undefined" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const mailHref = isMobile ? `mailto:${EMAIL}` : `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`;
+
   return (
     <section
       id="contacto"
@@ -1208,18 +1215,23 @@ function CTA() {
           Somos un equipo pequeño, ágil y apasionado por la tecnología con impacto. Contactanos para explorar cómo Inter-act puede ayudar a tu organización.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <button
+          <a
+            href={mailHref}
+            target={isMobile ? undefined : "_blank"}
+            rel="noopener noreferrer"
             style={{
               ...MONT, fontWeight: 700, fontSize: "13px", letterSpacing: "0.06em", textTransform: "uppercase",
               background: "#fff", color: "#0C2340", borderRadius: "6px",
               padding: "15px 32px", border: "none", cursor: "pointer",
               transition: "all 0.2s",
+              textDecoration: "none",
+              display: "inline-block",
             }}
             onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(255,255,255,0.2)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
           >
             Contactar a Inter-act
-          </button>
+          </a>
           <a
             href={pdfPuertoSeguro}
             download="PuertoSeguro_Analisis.pdf"
