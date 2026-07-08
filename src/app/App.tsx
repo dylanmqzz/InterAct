@@ -205,11 +205,11 @@ function Navbar() {
         >
           {/* Logo */}
           <a href="#" className="flex items-center no-underline">
-             <img
-               src={interActLogo}
-               alt="InterAct Logo"
-               style={{ height: "60px", width: "auto", objectFit: "contain", borderRadius:"15px" }}
-             />
+            <img
+              src={interActLogo}
+              alt="InterAct Logo"
+              style={{ height: "60px", width: "auto", objectFit: "contain", borderRadius: "15px" }}
+            />
           </a>
 
           {/* Desktop links */}
@@ -413,8 +413,8 @@ function HeroSlider() {
   }, [current, goTo]);
 
   return (
-    <section 
-      className="relative w-full overflow-hidden" 
+    <section
+      className="relative w-full overflow-hidden"
       style={{ minHeight: "100vh", background: "#0C2340", touchAction: "pan-y", userSelect: "none" }}
       onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
       onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
@@ -1156,11 +1156,11 @@ function StackTecnologico() {
 /* ══════════════════════════════════════════════════════════
    SECCIÓN: CTA
 ══════════════════════════════════════════════════════════ */
-const EMAIL = "d@gmail.com";
+const EMAIL = "interactbahiablanca@gmail.com";
 
 function CTA() {
   const { ref, inView } = useInView();
-  
+
   // Usar mailto en móviles (donde siempre hay app por defecto) y Gmail web en escritorio
   const isMobile = typeof navigator !== "undefined" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const mailHref = isMobile ? `mailto:${EMAIL}` : `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`;
